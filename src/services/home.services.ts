@@ -37,3 +37,9 @@ export const getBestSellingProducts = async (): Promise<Product[]> => {
     throw error;
   }
 };
+export const apiUpdateView = async (
+  data: any,
+): Promise<any> => {
+  const res = await apiClient?.post(`/api/SanPham/updatelx-item`, data);  
+  return res?.data;
+};

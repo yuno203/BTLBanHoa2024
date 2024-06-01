@@ -3,12 +3,14 @@ import { Link, useNavigate  } from "react-router-dom";
 import { closeNav, closeNavMid, openNav, openNavMid } from "../utils/hide_menu";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { cartState } from "../constant/recoil";
+import { cartState, userState } from "../constant/recoil";
 import { getMenus } from "../services/header.services";
+import { cursorTo } from 'readline';
 
 const Header = function () {
   const [menus, setMenus] = useState([]);
   const [cart, setCart] = useRecoilState(cartState);
+  const [userData, setUserData] = useRecoilState<any>(userState);
   const navigate  = useNavigate(); // Sử dụng hook useHistory ở đây
   const [searchQuery, setSearchQuery] = useState('');
    useEffect(() => {
@@ -21,6 +23,19 @@ const Header = function () {
     }
     loadData();
   }, []);
+
+  useEffect(() => {
+    let list = JSON.parse(localStorage.getItem('user')||"[]")
+    setUserData(list);
+  }, []);
+
+  const handleLogout = () => {
+    setUserData(null);
+    localStorage.removeItem('user');
+    navigate('/');
+    window.location.reload();
+  };
+
   const handleSearch = () => {
     navigate(`/search/${encodeURIComponent(searchQuery)}`); 
   };
@@ -118,17 +133,66 @@ const Header = function () {
           <div className="cart">
             <a id="shopping-cart" href="">
               <img src="../anhhoa/shopping-bag.png" />
-              <strong>Giỏ hàng</strong>
-               <span className="cart-item-count">{cart.length}</span>
+              <strong>Giỏ hàng({cart.length})</strong>
+               {/* <span className="cart-item-count">{cart.length}</span> */}
             </a>
           </div>
           </Link>
           <div className="my-account">
+            <Link to={"/user"}>
             <img src="../anhhoa/user.png" style={{ borderWidth: 0 }} />
             <a title="Tai Khoan" href="#">
-              Tài khoản{" "}
+            {userData ? `Tài khoản ${userData.hoTen}` : ""}            
             </a>
-            <div></div>
+            </Link>
+            <div className="list_ctrl" style={{cursor:"pointer" }}>
+                <ul>
+                  <li className="first">
+                    <Link to={"/profile"}>
+                    <a
+                      title="Thông tin tài khoản"
+                    >
+                      Thông tin tài khoản
+                    </a>
+                    </Link>
+                  </li>
+                  <li>
+                    <a
+                      title="Đổi mật khẩu"
+                    >
+                      Đổi mật khẩu
+                      
+                    </a>
+                  </li>
+                  <li>
+                    <Link to={"/bill"}>
+                    <a
+                      title="Xem lại đơn hàng"
+                    >
+                      Xem lại đơn hàng
+                    </a>
+                    </Link>
+                  </li>
+                  <li>
+                    <a
+                    
+                      title="Giới thiệu Hoayeuthuong.com đến người thân"
+                   
+                    >
+                      Giới thiệu Hoayeuthuong.com đến người thân
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      title="Đăng xuất"
+                      onClick={handleLogout}
+                    >
+                      Đăng xuất
+                    </a>
+                  </li>
+                </ul>
+              </div>
+         
           </div>
         </div>
       </nav>

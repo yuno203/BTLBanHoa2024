@@ -44,7 +44,7 @@ const Detail = () => {
     }
   }, [productDetail, page, pageSize]);;
 
-  // Kiểm tra xem productDetail đã được tải chưa
+
   if (!productDetail) {
     return <div>Loading...</div>;
   }
@@ -89,7 +89,7 @@ const Detail = () => {
         <div className="giatt">
           <span className="giacu">1.000.000đ</span>
           <span className="giamoi">
-          {productDetail.gia}đ
+          {(productDetail.gia).toLocaleString('vi-VN',{style : 'currency',currency:'VND'})}
           </span>
         </div>
         <p className="vat">Giá đã bao gồm 10% VAT</p>
@@ -281,7 +281,7 @@ const Detail = () => {
           <br />
           <span className="thuoctinh">
             <em className="gianiemiet">450.000d</em>
-            <em>{x.gia}</em>
+            <em>{(x.gia).toLocaleString('vi-VN',{style : 'currency',currency:'VND'})}</em>
           </span>
           <span className="selebe">Sale</span>
           <span className="view" style={{color:'black'}}>👁️{x.luotXem}</span>

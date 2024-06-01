@@ -87,9 +87,9 @@ const Cart: React.FC = () => {
                   <br />
                   <p>
                     <span className="gia">
-                      {x.gia}
+                    {(x.gia).toLocaleString('vi-VN',{style : 'currency',currency:'VND'})}
                     </span>
-                    <sup>đ</sup>
+                    <sup></sup>
                   </p>
                   <div className="soluong">
                     <div className="giam" onClick={() => handleDecreaseQuantity(index)} />

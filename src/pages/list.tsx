@@ -276,7 +276,7 @@ const List = function () {
                   <span className="thuoctinh">
                     <em className="gianiemiet">450.000đ</em>
                     <em>
-                      {x.gia}đ
+                    {(x.gia).toLocaleString('vi-VN',{style : 'currency',currency:'VND'})}
                     </em>
                   </span>
                   <span className="selebe">Sale</span>
@@ -293,7 +293,7 @@ const List = function () {
   </div>
 </div>
 
-      <section className="page">
+      {/* <section className="page">
         <select name="pageSize" onChange={(e)=> changeInputValue(e)} value={pageSize}>
           <option value="5">6</option>
           <option value="10">12</option>
@@ -309,7 +309,7 @@ const List = function () {
           previousLabel="<<"
           renderOnZeroPageCount={null}
         />
-      </section>
+      </section> */}
     </>
   );
 };

@@ -132,6 +132,161 @@ nav{
     background-color: #FFF;
     padding: 10px 0px; */
 }
+
+.col_1_1 {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .order-box {
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+  }
+  
+  .order-box-header {
+    background-color: #f0f0f0;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .order-box-header-left {
+    font-weight: bold;
+  }
+  
+  .order-box-header-right p {
+    margin: 0;
+  }
+  
+  .order-row {
+    display: flex;
+    padding: 10px;
+  }
+  
+  .order-row-col1,
+  .order-row-col2,
+  .order-row-col3,
+  .order-row-col4,
+  .order-row-col5 {
+    flex: 1;
+  }
+  
+  .order-row-col2 ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .order-row-col2 img {
+    max-width: 100px;
+    max-height: 100px;
+  }
+  
+  .order-row-col3 {
+    padding-left: 20px;
+  }
+  
+  .order-row-col3 strong {
+    font-weight: bold;
+  }
+  
+  .order-row-col5 p {
+    margin: 0;
+  }
+  
+  .paging {
+    text-align: center;
+    margin-top: 10px;
+  }
+  .view-more{
+    display: inline-block;
+    min-width: 100%;
+    padding: 5px 0px;
+    text-align: center;
+    border: 1px solid #7d8b9d !important;
+    color: #111 !important;
+    background-color: #d9e8fb;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 10px;
+   
+  }
+.paymemt{
+    display: inline-block;
+    min-width: 100%;
+    padding: 5px 0px;
+    margin-top: 10px;
+    text-align: center;
+    border: 1px solid #db757c !important;
+    color: #111 !important;
+    background-color: #dd8699;
+    font-weight: 600;
+    border-radius: 10px;
+    text-decoration: none;
+    
+}
+
+.view-more:hover{
+    background-color: #4890dd;
+}
+.paymemt:hover {
+    background-color: #df5f5f;
+}
+
+.out-of-stock{
+    z-index: 1;
+    position: absolute;
+    top: 27px;
+}
+
+
+
+
+.my-account {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .my-account .list_ctrl {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: -120px;
+    width: 200px;
+    background-color: white;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    min-width: 200px;
+  }
+  
+  .my-account:hover .list_ctrl {
+    display: block;
+  }
+  
+  .my-account .list_ctrl ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .my-account .list_ctrl ul li {
+    padding: 8px 16px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .my-account .list_ctrl ul li a {
+    text-decoration: none;
+    color: black;
+    display: block;
+  }
+  
+  .my-account .list_ctrl ul li a:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .my-account .list_ctrl ul li:first-child {
+    border-top: 1px solid #ddd;
+  }
+  
 .logo img{
     float: left;
     width: 285px;
@@ -327,12 +482,28 @@ a{
     position: relative;
     float: left;
     margin-top: 10px;
-    z-index: 1;
+    z-index: 0;
 }
 .banner img{
     width: 100%;
 
 }
+
+.error {
+  
+  
+    color: red;
+      font-size: 0.875em; 
+      margin-top: 0.25em; 
+    }
+    
+  
+    input.error {
+      border-color: red;
+    }
+    
+    
+
 .filter{
     width: 470px;
     height: 186px;

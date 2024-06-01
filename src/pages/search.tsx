@@ -53,7 +53,7 @@ const Search = () => {
                   <a href="#">{product.tenSanPham}</a>
                   <br />
                   <span className="thuoctinh">
-                    <em className="gianiemiet">{product.gia}</em>
+                    <em className="gianiemiet">{(product.gia).toLocaleString('vi-VN',{style : 'currency',currency:'VND'})}</em>
                   </span>
                   <span className="selebe">Sale</span>
                   <span className="view" style={{ color: "black" }}>

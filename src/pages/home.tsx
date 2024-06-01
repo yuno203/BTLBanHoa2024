@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllProducts, getBestSellingProducts } from "../services/home.services";
+import { apiUpdateView, getAllProducts, getBestSellingProducts } from "../services/home.services";
 import Marquee from "react-fast-marquee";
 import '../assets/css/Trangchu.css'
 import { Link } from "react-router-dom";
@@ -12,22 +12,36 @@ interface Product {
   gia: number;
   dacBiet : boolean;
   luotXem: number;
+  soLuong:number;
   anhDaiDien: string;
-  // Các thuộc tính khác của sản phẩm
+  //định nghĩa cấu trúc của 1 sản phẩm
 }
-
+interface Product1 {
+  maSanPham: number;
+  tenSanPham: string;
+  gia: number;
+  dacBiet : boolean;
+  luotXem: number;
+  anhDaiDien: string;
+  //định nghĩa cấu trúc của 1 sản phẩm
+}
 const Home: React.FC = () => {
-  const [bestSellingProducts, setBestSellingProducts] = useState<Product[]>([]);
+  const [bestSellingProducts, setBestSellingProducts] = useState<Product1[]>([]);
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
   const [totalProducts, setTotalProducts] = useState<number>(0);
+  //khai báo các state để lưu trữ thông tin san pham
+
 
   const [allProductsdb, setAllProductsdb] = useState<Product[]>([]);
   const [pagedb, setPagedb] = useState<number>(1);
-  const [pageSizedb, setPageSizedb] = useState<number>(20);
+  const [pageSizedb, setPageSizedb] = useState<number>(17);
   const [totalProductsdb, setTotalProductsdb] = useState<number>(0);
 
+  const [viewCounts, setViewCounts] = useState<{ [key: number]: number }>({});
+  //su dung useEfect để gọi API và lấy dữ diệu san pham khi cac component duoc render
+  //dữ liệu từ các api sẽ đuoc luu vao state
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -75,15 +89,52 @@ const Home: React.FC = () => {
   const handlePageChangedb = (currentPagedb: number) => {
     setPagedb(currentPagedb);
   };
-console.log(allProducts)
-console.log(allProductsdb)
+
+  const handleProductClick = async (maSanPham: number) => {
+    try {
+      // Gửi yêu cầu API để tăng lượt xem
+      await apiUpdateViewCount(maSanPham);
+
+      // Cập nhật lượt xem trong danh sách hiển thị
+      setViewCounts(prevState => ({
+        ...prevState,
+        [maSanPham]: (prevState[maSanPham] || 0) + 1
+      }));
+    } catch (error) {
+      console.error("Lỗi khi cập nhật lượt xem:", error);
+    }
+  };
+
+  const apiUpdateViewCount = async (maSanPham: number) => {
+    try {
+      await apiUpdateView({ maSanPham, luotXem: 1 }); // Gửi yêu cầu API để tăng lượt xem
+    } catch (error) {
+      throw new Error("Lỗi khi cập nhật lượt xem");
+    }
+  };
+
+
+  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
+  const images: string[] = ['../anhhoa/4.jpg','../anhhoa/1.jpg', '../anhhoa/2.jpg', '../anhhoa/3.jpg']; // Danh sách các đường dẫn hình ảnh
+
+  useEffect(() => {
+    // Tự động chuyển đổi hình ảnh sau mỗi khoảng thời gian
+    const interval = setInterval(() => {
+      setCurrentImageIndex(prevIndex => (prevIndex + 1) % images.length);
+    }, 4000); // Thời gian chuyển đổi: 3 giây
+
+    // Xóa interval khi component bị unmount
+    return () => clearInterval(interval);
+  }, []); // useEffect sẽ chỉ chạy một lần khi component được render
+
+ 
   return (
     <>
      <div id="Quangcao">
         <div className="wrapper">
           <div className="banner">
             <div className="image">
-              <img id="img"  src="../anhhoa/2.jpg" />
+            <img id="img" src={images[currentImageIndex]} alt={`Image ${currentImageIndex}`} />
             </div>
           </div>
           <div className="filter">
@@ -153,14 +204,15 @@ console.log(allProductsdb)
     <div className="wrapper">
       <div className="dulieu ">
         <h2>SẢN PHẨM</h2>
-        
         {Array.isArray(allProducts) && allProducts.length > 0 ? (
             allProducts.map((product, index) => (
               <div className="sanphamTC" >
+            
               <div key={index} className="item">
                   <Link
-                      to={"/detail/" + product.maSanPham}
+                      to={"/detail/" + product.maSanPham} onClick={() => handleProductClick(product.maSanPham)}
                     >
+                          {product.soLuong === 0 && <span className="out-of-stock"> <img src="https://scontent.xx.fbcdn.net/v/t1.15752-9/445622359_1639688750204344_2840187658282405104_n.png?stp=dst-png_p206x206&_nc_cat=104&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHsY7OYJGhObHQX7y07EIoZsWC_h1zRdbGxYL-HXNF1sWPRXaGqsqJLYr_TO7GmmVJyCBkYj-5z644v6t5KaaXB&_nc_ohc=ZdYVYga_e60Q7kNvgGiNCk_&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_Q7cD1QHJwsq9onzvArw1FNRdCsik8wlkolb-Rf8bQZUVq3RSTA&oe=668183F1"/></span>}
                 <div className="i">
                   <a href="#">
                     <img src={product.anhDaiDien} alt={product.tenSanPham} />
@@ -171,7 +223,7 @@ console.log(allProductsdb)
                   <br />
                   <span className="thuoctinh">
                     <em className="gianiemiet">1.000.000đ</em>
-                    <em className="ng-binding">{product.gia}đ</em>
+                    <em className="ng-binding">{(product.gia).toLocaleString('vi-VN',{style : 'currency',currency:'VND'})}</em>
                     {/* Hiển thị các thông tin khác của sản phẩm */}
                   </span>
                   <span className="selebe">Sale</span>

@@ -1,0 +1,81 @@
+/* Form Control */
+.form_ctrl {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+  }
+
+  /* Form Content */
+  .frm_content {
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .frm_content h2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .frm_content label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .frm_content input[type="text"],
+  .frm_content input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+  
+  .frm_content .button {
+    text-align: right;
+  }
+  
+  .frm_content .button input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .frm_content .button input[type="submit"].create {
+    background-color: #4CAF50;
+  }
+  
+  .frm_content .button input[type="submit"].login {
+    background-color: #007bff;
+  }
+  
+  .frm_content .button input[type="submit"]:hover {
+    opacity: 0.8;
+  }
+  
+  .frm_content .req {
+    color: red;
+  }
+  
+  /* Media Queries */
+  @media (max-width: 767px) {
+    .form_ctrl {
+      flex-direction: column;
+    }
+  
+    .col_1_2 {
+      width: 100%;
+    }
+  
+    .m_r12 {
+      margin-right: 0;
+    }
+  }
